@@ -236,15 +236,8 @@ namespace PubnubApi
                 }
                 else if (listObject[0].GetType() == typeof(Newtonsoft.Json.Linq.JArray))
                 {
-                    JArray array = listObject[0] as JArray;
-                    if (dataProp.PropertyType == typeof(string))
-                    {
-                        userMessage = JsonConvert.SerializeObject(array);
-                    }
-                    else
-                    {
-                        userMessage = array.ToObject(dataProp.PropertyType, JsonSerializer.Create());
-                    }
+                    JToken token = listObject[0] as JToken;
+                    userMessage = token.ToObject(dataProp.PropertyType, JsonSerializer.Create());
 
                     dataProp.SetValue(message, userMessage, null);
                 }
